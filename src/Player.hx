@@ -9,6 +9,9 @@ class Player extends Entity
 
 	var image:Image;
 	var moveSpeed:Float = 2;
+	var canShoot:Bool = true;
+	var shootTimer:Int = 0;
+	var shootCooldown:Int = 5;
 
 	public override function new(x:Float = 0, y:Float = 0) {
 
@@ -52,9 +55,30 @@ class Player extends Entity
 		else if ( Input.check("down") ) {
 			this.moveTowards( x, y + moveSpeed, moveSpeed, "walls" );
 		}
+
+		// Shoot
+		
+		if ( canShoot == false ) {
+			shootTimer--;
+			if ( shootTimer < 0 ) {
+				shootTimer = 0;
+				canShoot = true;
+			}
+		}
+		else if ( Input.mouseDown ) {
+			canShoot = false;
+			shootTimer = shootCooldown;
+
+			// Add bullet to the scene
+			HXP.scene.add( new TorchProjectile(x + width/2, y + height/2) );
+
+		}
+
+		//super.update(); // Maybe we don't need this, it's in the HXP tutorial...?
 		
 		HXP.setCamera(HXP.clamp(0, Level.levelwidth * Level.tilesize - HXP.width, (x + width / 2) - HXP.width / 2),
 					  HXP.clamp(0, Level.levelheight * Level.tilesize * 2 - HXP.height, (y + height / 2) - HXP.height / 2));
+
 	}
 
 }
