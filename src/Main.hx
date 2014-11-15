@@ -1,5 +1,6 @@
 import com.haxepunk.Engine;
 import com.haxepunk.HXP;
+import com.flock.entities.*;
 
 class Main extends Engine
 {
