@@ -21,6 +21,7 @@ class Sheep extends Entity
 		super(x, y);
 		graphic = new Image("graphics/sheep.png");
 		type = "sheep";
+		setHitbox(24, 18, 0, -6);
 	}
 	
 	override public function update():Void
@@ -56,6 +57,6 @@ class Sheep extends Entity
 	
 	private function randomTarget():Void
 	{
-		target = new Point(Math.random() * 50, Math.random() * 50);
+		target = new Point(Math.random() * 50, Math.random() * 20);
 	}
 }
