@@ -1,5 +1,6 @@
 import com.haxepunk.graphics.Image;
 import com.haxepunk.Entity;
+import flash.geom.Rectangle;
 
 class Wall extends Entity
 {
@@ -9,9 +10,9 @@ class Wall extends Entity
 	
 	var image:Image;
 	
-	public override function new(x:Float, y:Float) {
+	public override function new(x:Float, y:Float, rect:Rectangle) {
 		super(x,y);
-		image = Image.createRect(Globals.cellX, Globals.cellY, 0x0);
+		image = new Image("graphics/tileset.png", rect);
 		setHitbox( image.width, image.height, 0, 0 );
 		graphic = image;
 		type = "walls"; // So we know what to call them in collision
