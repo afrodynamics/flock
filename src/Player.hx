@@ -54,7 +54,7 @@ class Player extends Entity
 		}
 		
 		HXP.setCamera(HXP.clamp(0, Level.levelwidth * Level.tilesize - HXP.width, (x + width / 2) - HXP.width / 2),
-					  HXP.clamp(0, Level.levelheight * Level.tilesize - HXP.height, (y + height / 2) - HXP.height / 2));
+					  HXP.clamp(0, Level.levelheight * Level.tilesize * 2 - HXP.height, (y + height / 2) - HXP.height / 2));
 	}
 
 }

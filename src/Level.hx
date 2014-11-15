@@ -13,7 +13,7 @@ class Level
 	public static var levelwidth:Int;
 	public static var levelheight:Int;
 
-	public static function load(): Void
+	public static function load():Void
 	{
 		var xml:Xml = Xml.parse(Assets.getText("level/level1.oel")).firstElement();
 		levelwidth = cast(Std.parseInt(xml.get("width")) / tilesize, Int);
