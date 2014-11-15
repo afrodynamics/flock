@@ -8,7 +8,7 @@ import com.haxepunk.graphics.Backdrop;
 
 class MainScene extends Scene
 {
-	var player:Player;
+	public static var player:Player;
 	private static var dayLength:Int = 600;
 	private static var nightLength:Int = 600;
 	private var tickcount:Int = dayLength;
@@ -30,7 +30,7 @@ class MainScene extends Scene
 		{
 			add(new Sheep(HXP.screen.width / (2 * HXP.screen.scale) + Math.random() * 5, HXP.screen.height / (2 * HXP.screen.scale) + Math.random() * 5));
 		}
-
+		
 		add(player);
 	}
 	
@@ -53,6 +53,5 @@ class MainScene extends Scene
 				backdrop.graphic = new Backdrop("graphics/tile.png");
 			}
 		}
-		
 	}
 }

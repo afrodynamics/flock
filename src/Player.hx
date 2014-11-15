@@ -14,7 +14,7 @@ class Player extends Entity
 		image = Image.createRect(Globals.cellX, Globals.cellY, 0xFFCC00, 1);
 		setHitbox( Std.int( Globals.cellX ), Std.int( Globals.cellY ), 0, 0 );
 		graphic = image;
-		type = "player";
+		type = "sheep";
 
 		// Map key controls
 		Input.define("left", [Key.A, Key.LEFT]);
