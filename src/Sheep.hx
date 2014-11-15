@@ -1,6 +1,7 @@
 package ;
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
+import com.haxepunk.graphics.Spritemap;
 import com.haxepunk.HXP;
 import com.haxepunk.tweens.misc.Alarm;
 import openfl.geom.Point;
@@ -15,23 +16,26 @@ class Sheep extends Entity
 	private static var speed:Float = 1;
 	private static var radius = 20;
 	var count:Int = 0;
+	
+	private var sprite:Spritemap;
 
 	public function new(x:Float, y:Float) 
 	{
 		super(x, y);
-		graphic = new Image("graphics/sheep.png");
+		graphic = sprite = new Spritemap("graphics/sheep.png", 24, 24);
 		type = "sheep";
 		setHitbox(24, 18, 0, -6);
 	}
 	
 	override public function update():Void
 	{
-		count += 1;
-		if (count == 180)
+		if (MainScene.dayState == "night")
 		{
-			count = 0;
-			//randomTarget();
+			//sprite.index = 2;
+			return;
 		}
+		
+		count += 1;
 		target.x = MainScene.player.x;
 		target.y = MainScene.player.y;
 		if (FlockUtil.pointDistance(x, y, target.x, target.y) < 2)
@@ -41,7 +45,6 @@ class Sheep extends Entity
 		}
 		velocity.x = target.x - x;
 		velocity.y = target.y - y;
-		//velocity.x = velocity.y = 0;
 		velocity.normalize(speed);
 		for (e in HXP.scene.entitiesForType("sheep"))
 		{
@@ -55,13 +58,9 @@ class Sheep extends Entity
 				velocity = velocity.add(toAdd);
 			}
 		}
-		//velocity.normalize(speed);
 		if (velocity.length < 0.3) velocity = new Point(0, 0);
+		if (MainScene.player.x < x && velocity.length > 0) sprite.flipped = true;
+		if (MainScene.player.x > x && velocity.length > 0) sprite.flipped = false;
 		moveBy(velocity.x, velocity.y, "walls");
-	}
-	
-	private function randomTarget():Void
-	{
-		target = new Point(Math.random() * 50, Math.random() * 20);
 	}
 }

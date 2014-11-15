@@ -5,14 +5,16 @@ import com.haxepunk.HXP;
 import com.haxepunk.Scene;
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Backdrop;
+import com.haxepunk.utils.Input;
+import com.haxepunk.utils.Key;
 
 class MainScene extends Scene
 {
 	public static var player:Player;
-	private static var dayLength:Int = 60;
-	private static var nightLength:Int = 60;
+	private static var dayLength:Int = 600;
+	private static var nightLength:Int = 600;
 	private var tickcount:Int = dayLength;
-	private var dayState:String = "day";
+	public static var dayState:String = "day";
 	private var backdrop:Entity;
 
 	public override function begin()
@@ -36,7 +38,12 @@ class MainScene extends Scene
 	override public function update():Void
 	{
 		super.update();
+		
 		tickcount--;
+		if (Input.pressed(Key.H))
+		{
+			tickcount = 0;
+		}
 		if (tickcount == 0) switch (dayState)
 		{
 			case "day":
