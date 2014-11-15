@@ -9,8 +9,8 @@ import com.haxepunk.graphics.Backdrop;
 class MainScene extends Scene
 {
 	public static var player:Player;
-	private static var dayLength:Int = 600;
-	private static var nightLength:Int = 600;
+	private static var dayLength:Int = 60;
+	private static var nightLength:Int = 60;
 	private var tickcount:Int = dayLength;
 	private var dayState:String = "day";
 	private var backdrop:Entity;
@@ -20,7 +20,6 @@ class MainScene extends Scene
 		player = new Player( 32, 32 );
 		backdrop = new Entity(0, 0, new Backdrop("graphics/tile.png"));
 		add(backdrop);
-		add(new Entity(0, 0, new Backdrop("graphics/tile.png")));
 
 		for ( i in 0...Std.int(HXP.screen.width / (Globals.cellX * HXP.screen.scale) )) {
 			add(new Wall(24 * i, 0));
