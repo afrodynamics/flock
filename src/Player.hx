@@ -5,10 +5,10 @@ import com.haxepunk.graphics.Image;
 import com.haxepunk.utils.*;
 import openfl.geom.Point;
 
-class Player extends Entity
+class Player extends FlockEntity
 {
 
-	var moveSpeed:Float = 2;
+	var moveSpeed:Float = 5;
 	var canShoot:Bool = true;
 	var shootTimer:Int = 0;
 	var shootCooldown:Int = 5;

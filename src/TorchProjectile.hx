@@ -5,7 +5,7 @@ import openfl.geom.Point;
 import com.haxepunk.HXP;
 import com.haxepunk.utils.Input;
 
-class TorchProjectile extends Entity {
+class TorchProjectile extends FlockEntity {
 
 	var image:Image;
 	var moveSpeed:Float = 6;

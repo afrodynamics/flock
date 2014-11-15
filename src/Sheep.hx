@@ -9,7 +9,7 @@ import openfl.geom.Point;
 /**
  * Sheep AI.
  */
-class Sheep extends Entity
+class Sheep extends FlockEntity
 {
 	private var target:Point = new Point(0, 0);
 	private var velocity:Point = new Point(0, 0);
@@ -32,6 +32,7 @@ class Sheep extends Entity
 	
 	override public function update():Void
 	{
+		super.update();
 		if (MainScene.dayState == "night")
 		{
 			//sprite.index = 2;

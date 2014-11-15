@@ -2,7 +2,7 @@ import com.haxepunk.graphics.Image;
 import com.haxepunk.Entity;
 import flash.geom.Rectangle;
 
-class Wall extends Entity
+class Wall extends FlockEntity
 {
 
 	// Basic wall entity of the base cell size
