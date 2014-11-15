@@ -29,7 +29,7 @@ class MainScene extends Scene
 		shift();
 		Level.load();
 		
-		player = new Player(288, 1160);
+		player = new Player(288, 1140);
 		for (i in 0...10)
 		{
 			add(new Sheep(player.x + Math.random() * 5, player.y + Math.random() * 5, true));

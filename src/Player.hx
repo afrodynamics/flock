@@ -1,4 +1,5 @@
 import com.haxepunk.Entity;
+import com.haxepunk.graphics.Spritemap;
 import com.haxepunk.HXP;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.utils.*;
@@ -7,20 +8,24 @@ import openfl.geom.Point;
 class Player extends Entity
 {
 
-	var image:Image;
 	var moveSpeed:Float = 2;
 	var canShoot:Bool = true;
 	var shootTimer:Int = 0;
 	var shootCooldown:Int = 5;
+	private var sprite:Spritemap;
 
 	public override function new(x:Float = 0, y:Float = 0) {
 
 		super(x,y);
-		image = Image.createRect(Globals.cellX, Globals.cellY, 0xFFCC00, 1);
-		setHitbox( Std.int( Globals.cellX ), Std.int( Globals.cellY ), 0, 0 );
-		width = height = 24;
-		graphic = image;
+		graphic = sprite = new Spritemap("graphics/player.png", 24, 48);
+		setHitbox(24, 48, 0, 0 );
+		width = 24;
+		height = 48;
 		type = "sheep";
+		
+		sprite.add("down", [0]);
+		sprite.add("side", [1]);
+		sprite.add("up", [2]);
 
 		// Map key controls
 		Input.define("left", [Key.A, Key.LEFT]);
@@ -41,9 +46,13 @@ class Player extends Entity
 		}
 		else if ( Input.check("left") ) {
 			this.moveTowards( x - moveSpeed, y, moveSpeed, "walls" );
+			sprite.play("side");
+			sprite.flipped = true;
 		}
 		else if ( Input.check("right") ) {
 			this.moveTowards( x + moveSpeed, y, moveSpeed, "walls" );
+			sprite.play("side");
+			sprite.flipped = false;
 		}
 
 		if ( Input.check("up") && Input.check("down") ) {
@@ -51,9 +60,13 @@ class Player extends Entity
 		}
 		else if ( Input.check("up") ) {
 			this.moveTowards( x, y - moveSpeed, moveSpeed, "walls" );
+			sprite.play("up");
+			sprite.flipped = false;
 		}
 		else if ( Input.check("down") ) {
 			this.moveTowards( x, y + moveSpeed, moveSpeed, "walls" );
+			sprite.play("down");
+			sprite.flipped = false;
 		}
 
 		// Shoot
