@@ -16,15 +16,18 @@ class Sheep extends Entity
 	private static var speed:Float = 1;
 	private static var radius = 20;
 	var count:Int = 0;
+	private var found:Bool = false;
+	private var findDistance:Float = 64;
 	
 	private var sprite:Spritemap;
 
-	public function new(x:Float, y:Float) 
+	public function new(x:Float, y:Float, active:Bool = false) 
 	{
 		super(x, y);
 		graphic = sprite = new Spritemap("graphics/sheep.png", 24, 24);
 		type = "sheep";
 		setHitbox(24, 18, 0, -6);
+		this.found = active;
 	}
 	
 	override public function update():Void
@@ -33,6 +36,16 @@ class Sheep extends Entity
 		{
 			//sprite.index = 2;
 			return;
+		}
+		
+		var squaredDistToPlayer:Float = FlockUtil.squaredPointDistance(x, y, MainScene.player.x, MainScene.player.y);
+		if (!found)
+		{
+			if (squaredDistToPlayer < findDistance * findDistance)
+			{
+				found = true;
+			}
+			else return;
 		}
 		
 		count += 1;

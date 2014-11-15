@@ -34,5 +34,9 @@ class Level
 				HXP.scene.add(new Wall(x * tilesize, y * tilesize, rect));
 			}
 		}
+		
+		HXP.scene.add(new Sheep(72, 96));
+		HXP.scene.add(new Sheep(480, 144));
+		HXP.scene.add(new Sheep(456, 336));
 	}
 }

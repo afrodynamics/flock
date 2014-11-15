@@ -27,8 +27,9 @@ class MainScene extends Scene
 		player = new Player(288, 570);
 		for (i in 0...10)
 		{
-			add(new Sheep(player.x + Math.random() * 5, player.y + Math.random() * 5));
+			add(new Sheep(player.x + Math.random() * 5, player.y + Math.random() * 5, true));
 		}
+		
 		
 		add(player);
 	}
