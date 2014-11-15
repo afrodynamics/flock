@@ -24,7 +24,7 @@ class MainScene extends Scene
 		add(backdrop);
 		Level.load();
 		
-		player = new Player(96, 96);
+		player = new Player(288, 570);
 		for (i in 0...10)
 		{
 			add(new Sheep(player.x + Math.random() * 5, player.y + Math.random() * 5));

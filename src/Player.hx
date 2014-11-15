@@ -15,6 +15,7 @@ class Player extends Entity
 		super(x,y);
 		image = Image.createRect(Globals.cellX, Globals.cellY, 0xFFCC00, 1);
 		setHitbox( Std.int( Globals.cellX ), Std.int( Globals.cellY ), 0, 0 );
+		width = height = 24;
 		graphic = image;
 		type = "sheep";
 
@@ -26,25 +27,10 @@ class Player extends Entity
 
 	}
 
-	private function calculateCameraCenter():Point {
-
-		var viewWidth = HXP.screen.width / HXP.screen.scale;
-		var viewHeight = HXP.screen.height / HXP.screen.scale;
-
-		var camX = HXP.clamp( 0, HXP.screen.width - viewWidth, x - viewWidth );
-		var camY = HXP.clamp( 0, HXP.screen.height - viewHeight, y - viewHeight );
-
-		return new Point(camX,camY);
-
-	}
-
-	public override function update() {
-
-		// Force camera to follow player
-
-		var cam:Point = calculateCameraCenter();
-		HXP.setCamera( cam.x, cam.y );
-
+	public override function update()
+	{
+		super.update();
+		
 		// Movement (auto collision detection with walls)
 
 		if ( Input.check("left") && Input.check("right") ) {
@@ -66,8 +52,9 @@ class Player extends Entity
 		else if ( Input.check("down") ) {
 			this.moveTowards( x, y + moveSpeed, moveSpeed, "walls" );
 		}
-
-		super.update();
+		
+		HXP.setCamera(HXP.clamp(0, Level.levelwidth * Level.tilesize - HXP.width, (x + width / 2) - HXP.width / 2),
+					  HXP.clamp(0, Level.levelheight * Level.tilesize - HXP.height, (y + height / 2) - HXP.height / 2));
 	}
 
 }
