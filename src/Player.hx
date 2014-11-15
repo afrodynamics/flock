@@ -14,6 +14,7 @@ class Player extends Entity
 		image = Image.createRect(Globals.cellX, Globals.cellY, 0xFFCC00, 1);
 		setHitbox( Std.int( Globals.cellX ), Std.int( Globals.cellY ), 0, 0 );
 		graphic = image;
+		type = "player";
 
 		// Map key controls
 		Input.define("left", [Key.A, Key.LEFT]);
@@ -31,20 +32,20 @@ class Player extends Entity
 			// Do nothing
 		}
 		else if ( Input.check("left") ) {
-			this.moveTowards( x - moveSpeed, y, moveSpeed, "walls", true );
+			this.moveTowards( x - moveSpeed, y, moveSpeed, "walls" );
 		}
 		else if ( Input.check("right") ) {
-			this.moveTowards( x + moveSpeed, y, moveSpeed, "walls", true );
+			this.moveTowards( x + moveSpeed, y, moveSpeed, "walls" );
 		}
 
 		if ( Input.check("up") && Input.check("down") ) {
 			// Do nothing
 		}
 		else if ( Input.check("up") ) {
-			this.moveTowards( x, y - moveSpeed, moveSpeed, "walls", true );
+			this.moveTowards( x, y - moveSpeed, moveSpeed, "walls" );
 		}
 		else if ( Input.check("down") ) {
-			this.moveTowards( x, y + moveSpeed, moveSpeed, "walls", true );
+			this.moveTowards( x, y + moveSpeed, moveSpeed, "walls" );
 		}
 
 		super.update();
