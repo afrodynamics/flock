@@ -51,7 +51,7 @@ class Sheep extends Entity
 			}
 		}
 		//velocity.normalize(speed);
-		moveBy(velocity.x, velocity.y);
+		moveBy(velocity.x, velocity.y, "walls");
 	}
 	
 	private function randomTarget():Void
