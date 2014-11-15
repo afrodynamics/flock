@@ -12,7 +12,7 @@ class Sheep extends Entity
 {
 	private var target:Point = new Point(0, 0);
 	private var velocity:Point = new Point(0, 0);
-	private static var speed:Float = 0.5;
+	private static var speed:Float = 1;
 	private static var radius = 20;
 	var count:Int = 0;
 
@@ -21,6 +21,7 @@ class Sheep extends Entity
 		super(x, y);
 		graphic = new Image("graphics/sheep.png");
 		type = "sheep";
+		setHitbox(24, 18, 0, -6);
 	}
 	
 	override public function update():Void
@@ -29,8 +30,10 @@ class Sheep extends Entity
 		if (count == 180)
 		{
 			count = 0;
-			randomTarget();
+			//randomTarget();
 		}
+		target.x = MainScene.player.x;
+		target.y = MainScene.player.y;
 		if (FlockUtil.pointDistance(x, y, target.x, target.y) < 2)
 		{
 			target.x = x;
@@ -42,20 +45,23 @@ class Sheep extends Entity
 		velocity.normalize(speed);
 		for (e in HXP.scene.entitiesForType("sheep"))
 		{
+			var radius:Float = radius;
+			if (e == MainScene.player) radius = 40;
 			var dist:Float = FlockUtil.pointDistance(e.x, e.y, x, y);
 			if (dist < radius)
 			{
 				var toAdd:Point = new Point(x - e.x, y - e.y);
-				toAdd.normalize((1 - dist / radius) * 2);
+				toAdd.normalize((1 - dist / radius) * 3);
 				velocity = velocity.add(toAdd);
 			}
 		}
 		//velocity.normalize(speed);
+		if (velocity.length < 0.3) velocity = new Point(0, 0);
 		moveBy(velocity.x, velocity.y, "walls");
 	}
 	
 	private function randomTarget():Void
 	{
-		target = new Point(Math.random() * 50, Math.random() * 50);
+		target = new Point(Math.random() * 50, Math.random() * 20);
 	}
 }
