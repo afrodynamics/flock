@@ -3,7 +3,7 @@ import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
 import com.haxepunk.tweens.misc.Alarm;
-import flash.geom.Point;
+import openfl.geom.Point;
 
 /**
  * Sheep AI.

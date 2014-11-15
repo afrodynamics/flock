@@ -1,6 +1,8 @@
 import com.haxepunk.Entity;
+import com.haxepunk.HXP;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.utils.*;
+import openfl.geom.Point;
 
 class Player extends Entity
 {
@@ -24,8 +26,25 @@ class Player extends Entity
 
 	}
 
+	private function calculateCameraCenter():Point {
+
+		var viewWidth = HXP.screen.width / HXP.screen.scale;
+		var viewHeight = HXP.screen.height / HXP.screen.scale;
+
+		var camX = HXP.clamp( 0, HXP.screen.width - viewWidth, x - viewWidth );
+		var camY = HXP.clamp( 0, HXP.screen.height - viewHeight, y - viewHeight );
+
+		return new Point(camX,camY);
+
+	}
+
 	public override function update() {
-		
+
+		// Force camera to follow player
+
+		var cam:Point = calculateCameraCenter();
+		HXP.setCamera( cam.x, cam.y );
+
 		// Movement (auto collision detection with walls)
 
 		if ( Input.check("left") && Input.check("right") ) {
