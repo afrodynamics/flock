@@ -12,6 +12,10 @@ class MainScene extends Scene
 	{
 		player = new Player( 32, 32 );
 		add(new Entity(0, 0, new Backdrop("graphics/tile.png")));
+		for ( i in 1...24) {
+			add(new Wall(24 * i, 0));
+		}
+		
 		add(player);
 	}
 }
