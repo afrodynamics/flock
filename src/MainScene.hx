@@ -67,13 +67,14 @@ class MainScene extends Scene
 			Level.load();
 			loadNext = false;
 			moveDown = false;
+			for (i in 0...Level.levelwidth)
+				add(new Wall(i * Level.tilesize, Level.levelheight * Level.tilesize * 2, new Rectangle(0, 0, Level.tilesize, Level.tilesize)));
 		}
 		if (player.y < Level.levelheight * Level.tilesize / 2)
 		{
 			loadNext = true;
 			moveDown = true;
-			for (i in 0...Level.levelwidth)
-				add(new Wall(i * Level.tilesize, Level.levelheight * Level.tilesize * 2, new Rectangle(0, 0, Level.tilesize, Level.tilesize)));
+			
 		}
 	}
 }

@@ -8,7 +8,7 @@ import openfl.geom.Point;
 class Player extends FlockEntity
 {
 
-	var moveSpeed:Float = 5;
+	var moveSpeed:Float = 2;
 	var canShoot:Bool = true;
 	var shootTimer:Int = 0;
 	var shootCooldown:Int = 5;
@@ -18,9 +18,7 @@ class Player extends FlockEntity
 
 		super(x,y);
 		graphic = sprite = new Spritemap("graphics/player.png", 24, 48);
-		setHitbox(24, 48, 0, 0 );
-		width = 24;
-		height = 48;
+		setHitbox(20, 12, -2, -40);
 		type = "sheep";
 		
 		sprite.add("down", [0]);
@@ -86,11 +84,9 @@ class Player extends FlockEntity
 			HXP.scene.add( new TorchProjectile(x + width/2, y + height/2) );
 
 		}
-
-		//super.update(); // Maybe we don't need this, it's in the HXP tutorial...?
 		
-		HXP.setCamera(HXP.clamp(0, Level.levelwidth * Level.tilesize - HXP.width, (x + width / 2) - HXP.width / 2),
-					  HXP.clamp(0, Level.levelheight * Level.tilesize * 2 - HXP.height, (y + height / 2) - HXP.height / 2));
+		HXP.setCamera(HXP.clamp(0, Level.levelwidth * Level.tilesize - HXP.width, centerX - HXP.width / 2),
+					  HXP.clamp(0, Level.levelheight * Level.tilesize * 2 - HXP.height, centerY - 24 - HXP.height / 2));
 
 	}
 

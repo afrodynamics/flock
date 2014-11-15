@@ -26,7 +26,7 @@ class Sheep extends FlockEntity
 		super(x, y);
 		graphic = sprite = new Spritemap("graphics/sheep.png", 24, 24);
 		type = "sheep";
-		setHitbox(24, 18, 0, -6);
+		setHitbox(20, 14, -2, -8);
 		this.found = active;
 	}
 	
@@ -50,31 +50,32 @@ class Sheep extends FlockEntity
 		}
 		
 		count += 1;
-		target.x = MainScene.player.x;
-		target.y = MainScene.player.y;
-		if (FlockUtil.pointDistance(x, y, target.x, target.y) < 2)
+		target.x = MainScene.player.centerX;
+		target.y = MainScene.player.centerY;
+		if (FlockUtil.pointDistance(centerX, centerY, target.x, target.y) < 2)
 		{
-			target.x = x;
-			target.y = y;
+			target.x = centerX;
+			target.y = centerY;
 		}
-		velocity.x = target.x - x;
-		velocity.y = target.y - y;
+		velocity.x = target.x - centerX;
+		velocity.y = target.y - centerY;
 		velocity.normalize(speed);
 		for (e in HXP.scene.entitiesForType("sheep"))
 		{
 			var radius:Float = radius;
 			if (e == MainScene.player) radius = 40;
-			var dist:Float = FlockUtil.pointDistance(e.x, e.y, x, y);
+			var dist:Float = FlockUtil.pointDistance(e.centerX, e.centerY, centerX, centerY);
 			if (dist < radius)
 			{
-				var toAdd:Point = new Point(x - e.x, y - e.y);
-				toAdd.normalize((1 - dist / radius) * 3);
+				var toAdd:Point = new Point(centerX - e.centerX, centerY - e.centerY);
+				toAdd.normalize((1 - dist / radius) * 5);
 				velocity = velocity.add(toAdd);
 			}
 		}
-		if (velocity.length < 0.3) velocity = new Point(0, 0);
+		if (velocity.length < 0.4) velocity = new Point(0, 0);
+		moveBy(velocity.x, velocity.y, "walls");
+		
 		if (MainScene.player.x < x && velocity.length > 0) sprite.flipped = true;
 		if (MainScene.player.x > x && velocity.length > 0) sprite.flipped = false;
-		moveBy(velocity.x, velocity.y, "walls");
 	}
 }
