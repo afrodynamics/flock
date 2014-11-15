@@ -10,6 +10,7 @@ class Main extends Engine
 #if debug
 		HXP.console.enable();
 #end
+		
 		HXP.scene = new MainScene();
 		HXP.screen.scale = 2;
 	}

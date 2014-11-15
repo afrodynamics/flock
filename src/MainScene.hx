@@ -7,6 +7,7 @@ import com.haxepunk.Entity;
 import com.haxepunk.graphics.Backdrop;
 import com.haxepunk.utils.Input;
 import com.haxepunk.utils.Key;
+import flash.geom.Rectangle;
 
 class MainScene extends Scene
 {
@@ -19,18 +20,16 @@ class MainScene extends Scene
 
 	public override function begin()
 	{
-		player = new Player( 32, 32 );
 		backdrop = new Entity(0, 0, new Backdrop("graphics/tile.png"));
 		add(backdrop);
-
-		for ( i in 0...Std.int(HXP.screen.width / (Globals.cellX * HXP.screen.scale) )) {
-			add(new Wall(24 * i, 0));
-		}
+		Level.load();
 		
+		player = new Player(288, 570);
 		for (i in 0...10)
 		{
-			add(new Sheep(HXP.screen.width / (2 * HXP.screen.scale) + Math.random() * 5, HXP.screen.height / (2 * HXP.screen.scale) + Math.random() * 5));
+			add(new Sheep(player.x + Math.random() * 5, player.y + Math.random() * 5, true));
 		}
+		
 		
 		add(player);
 	}
