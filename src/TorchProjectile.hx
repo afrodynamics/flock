@@ -8,7 +8,7 @@ import com.haxepunk.utils.Input;
 class TorchProjectile extends FlockEntity {
 
 	var image:Image;
-	var moveSpeed:Float = 6;
+	var moveSpeed:Float = 2.5;
 	var radius:Int = 6;
 	var velocity:Point;
 
@@ -16,28 +16,33 @@ class TorchProjectile extends FlockEntity {
 		super(x,y);
 		image = new Image("graphics/fire-projectile.png");
 		graphic = image;
-		originX = Std.int( width / 2 );
-		originY = Std.int( height / 2 );
-		mask = new Circle( radius, 0, 0 ); // Circular objects have circular collision masks
+		width = image.width;
+		height = image.height;
+		x -= width / 2;
+		y -= height / 2;
 
 		// Calculate the direction to where this bullet needs to go
 		// MouseX/Y coordinates are in viewport coordinates, so we need to offset them by the
 		// camera position to ensure our vector is accurate no matter where this bullet starts
-		velocity = new Point( HXP.camera.x + Input.mouseX - x, HXP.camera.y + Input.mouseY - y );
-		velocity.normalize( moveSpeed );
+		velocity = new Point( HXP.camera.x + Input.mouseX - MainScene.player.centerX, HXP.camera.y + Input.mouseY - MainScene.player.centerY );
+		velocity.normalize(moveSpeed * 10);
 		type = "projectile";
+		//moveBy(velocity.x, velocity.y);
+		velocity.normalize(moveSpeed);
+		layer = -10;
 	}
 
 	public override function update() {
 		moveBy( velocity.x, velocity.y );
-		if ( collideTypes( "walls", x, y ) != null ) {
-			// If we hit a wall, remove this Entity from the scene
-			HXP.scene.remove( this );
+		//if (collideTypes( "walls", x, y ) != null) HXP.scene.remove(this);
+		var monster:Entity = collideTypes( "monster", x, y);
+		if (monster != null)
+		{
+			HXP.scene.remove(monster);
+			HXP.scene.remove(this);
 		}
 
-		// TODO: Optimize by deleting this bullet when we are far away from
-		// and likely to be outside of the camera
-
+		if (!onCamera) HXP.scene.remove(this);
 		super.update();
 	}
 

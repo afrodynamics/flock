@@ -12,9 +12,9 @@ class Monster extends Entity
 {
 	private var target:Sheep;
 	private var velocity:Point = new Point();
-	private var speed:Float = 1.5;
 	private var sprite:Spritemap;
-
+	private var speed:Float = 0.8;
+ 
 	public function new() 
 	{
 		super();
@@ -71,7 +71,9 @@ class Monster extends Entity
 		{
 			HXP.scene.remove(this);
 			HXP.scene.remove(collide);
-			cast(collide, Sheep).killed = true;
+			var sheep:Sheep = cast(collide, Sheep);
+			sheep.killed = true;
+			HXP.scene.add( new TombStone( sheep.x, sheep.y ));
 		}
 	}
 	
