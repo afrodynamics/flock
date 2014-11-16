@@ -1,6 +1,7 @@
 package ;
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
+import com.haxepunk.graphics.Spritemap;
 import com.haxepunk.HXP;
 import flash.geom.Point;
 
@@ -11,13 +12,18 @@ class Monster extends Entity
 {
 	private var target:Sheep;
 	private var velocity:Point = new Point();
+	private var sprite:Spritemap;
 	private var speed:Float = 0.8;
-
+ 
 	public function new() 
 	{
 		super();
 		chooseRandomSheep();
-		graphic = Image.createRect(24, 24);
+		sprite = new Spritemap("graphics/eye-critter-flying.png", 24, 24 );
+		sprite.add("down", [0]);
+		sprite.add("side", [1]);
+		sprite.add("up", [2]);
+		graphic = sprite;
 		type = "monster";
 		setHitbox(16, 16, -4, -4);
 		
@@ -51,13 +57,23 @@ class Monster extends Entity
 		velocity.y = target.centerY - centerY;
 		velocity.normalize(speed);
 		moveBy(velocity.x, velocity.y);
+
+		// Choose which sprite to use
+		if ( velocity.y < 0 ) {
+			sprite.play("up");
+		}
+		else {
+			sprite.play("down");
+		}
 		
 		var collide:Entity = collideTypes("sheep", x, y);
 		if (collide != null && collide != MainScene.player)
 		{
 			HXP.scene.remove(this);
 			HXP.scene.remove(collide);
-			cast(collide, Sheep).killed = true;
+			var sheep:Sheep = cast(collide, Sheep);
+			sheep.killed = true;
+			HXP.scene.add( new TombStone( sheep.x, sheep.y ));
 		}
 	}
 	
