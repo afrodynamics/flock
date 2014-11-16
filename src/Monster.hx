@@ -8,7 +8,7 @@ import flash.geom.Point;
 /**
  * Monster
  */
-class Monster extends Entity
+class Monster extends FlockEntity
 {
 	private var target:Sheep;
 	private var velocity:Point = new Point();
@@ -75,6 +75,8 @@ class Monster extends Entity
 			sheep.killed = true;
 			HXP.scene.add( new TombStone( sheep.x, sheep.y ));
 		}
+
+		super.update(); // De allocate if we're outside of the chunk
 	}
 	
 	private function chooseRandomSheep():Void

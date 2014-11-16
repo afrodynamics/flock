@@ -1,8 +1,7 @@
-import com.haxepunk.Entity;
 import com.haxepunk.graphics.Spritemap;
 import com.haxepunk.HXP;
 
-class TombStone extends Entity {
+class TombStone extends FlockEntity {
 	
 	private var sprite:Spritemap;
 

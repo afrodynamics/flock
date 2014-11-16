@@ -2,6 +2,7 @@ package ;
 
 import com.haxepunk.Graphic;
 import com.haxepunk.graphics.Image;
+import com.haxepunk.graphics.Text;
 import com.haxepunk.HXP;
 import com.haxepunk.Scene;
 import com.haxepunk.Entity;
@@ -20,6 +21,10 @@ class MainScene extends Scene
 	private var tickcount:Int = dayLength;
 	private var backdrop:Entity;
 	private var loadNext:Bool = true;
+	private var days:Int = 0;
+	private var dayTextEntity:Entity;
+	private var dayText:Text;
+
 	public static var player:Player;
 	public static var dayState:String = "day"; // magic string
 	public static var moveDown:Bool = true;
@@ -39,6 +44,10 @@ class MainScene extends Scene
 		Level.load();
 		
 		player = new Player(288, 1140 - 600);
+		dayText = new Text( "Days Survived: " + days );
+		dayTextEntity = new Entity();
+		dayTextEntity.graphic = dayText;
+
 		for (i in 0...10)
 		{
 			add(new Sheep(player.x + Math.random() * 5, player.y + Math.random() * 5, true));
@@ -50,28 +59,36 @@ class MainScene extends Scene
 	override public function update():Void
 	{
 		super.update();
-		
+
+		// Keep text in proper place
+		dayTextEntity.x = HXP.camera.x;
+		dayTextEntity.y = HXP.camera.y;
+
 		tickcount--;
 		if (Input.pressed(Key.H))
 		{
 			tickcount = 0;
 		}
-		if (tickcount == 0) switch (dayState)
-		{
-			case "day":
+		if (tickcount == 0) {
+			switch (dayState)
 			{
-				dayState = "night";
-				tickcount = nightLength;
-				backdrop.graphic = new Backdrop("graphics/tile2.png");
-				for (w in entitiesForType("walls")) cast(w, Wall).setNightImage();
+				case "day":
+				{
+					dayState = "night";
+					days++; // inc days survived counter
+					tickcount = nightLength;
+					backdrop.graphic = new Backdrop("graphics/tile2.png");
+					for (w in entitiesForType("walls")) cast(w, Wall).setNightImage();
+				}
+				case "night":
+				{
+					dayState = "day";
+					tickcount = dayLength;
+					backdrop.graphic = new Backdrop("graphics/tile.png");
+					for (w in entitiesForType("walls")) cast(w, Wall).setDayImage();
+				}
 			}
-			case "night":
-			{
-				dayState = "day";
-				tickcount = dayLength;
-				backdrop.graphic = new Backdrop("graphics/tile.png");
-				for (w in entitiesForType("walls")) cast(w, Wall).setDayImage();
-			}
+			dayText.text = "Days Survived: " + days; // Update day text
 		}
 		
 		// spawn monsters
