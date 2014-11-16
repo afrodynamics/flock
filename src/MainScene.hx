@@ -1,6 +1,7 @@
 package ;
 
 import com.haxepunk.Graphic;
+import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
 import com.haxepunk.Scene;
 import com.haxepunk.Entity;
@@ -22,6 +23,14 @@ class MainScene extends Scene
 	public static var player:Player;
 	public static var dayState:String = "day"; // magic string
 	public static var moveDown:Bool = true;
+	
+	private var shiftCount:Int = 0;
+	public static var numShifts:Int = 7;
+	
+	public static var grassColor1:Int = 0x77825A;
+	public static var grassColor2:Int = 0x94E354;
+	public static var wallColor1:Int = 0x857F75;
+	public static var wallColor2:Int = 0xFFFDE6;
 	
 	public override function begin()
 	{
@@ -54,12 +63,14 @@ class MainScene extends Scene
 				dayState = "night";
 				tickcount = nightLength;
 				backdrop.graphic = new Backdrop("graphics/tile2.png");
+				for (w in entitiesForType("walls")) cast(w, Wall).setNightImage();
 			}
 			case "night":
 			{
 				dayState = "day";
 				tickcount = dayLength;
 				backdrop.graphic = new Backdrop("graphics/tile.png");
+				for (w in entitiesForType("walls")) cast(w, Wall).setDayImage();
 			}
 		}
 		
@@ -80,11 +91,15 @@ class MainScene extends Scene
 			moveDown = false;
 			for (i in 0...Level.levelwidth)
 				add(new Wall(i * Level.tilesize, Level.levelheight * Level.tilesize * 2, new Rectangle(0, 0, Level.tilesize, Level.tilesize)));
+			shiftCount++;
 		}
 		if (player.y < Level.levelheight * Level.tilesize / 2 && dayState == "day")
 		{
 			loadNext = true;
 			moveDown = true;
 		}
+		
+		cast(backdrop.graphic, Backdrop).color = HXP.colorLerp(grassColor1, grassColor2, shiftCount / numShifts);
+		cast(Wall.dayImage, Image).color = HXP.colorLerp(wallColor1, wallColor2, shiftCount / numShifts);
 	}
 }
