@@ -84,7 +84,7 @@ class Player extends FlockEntity
 			shootTimer = shootCooldown;
 
 			// Add bullet to the scene
-			HXP.scene.add( new TorchProjectile(x + 12, y + 24));
+			HXP.scene.add( new TorchProjectile(x + 12, y + 30));
 
 		}
 		
