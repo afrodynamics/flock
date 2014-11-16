@@ -16,4 +16,9 @@ class FlockUtil
 		return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 	}
 	
+	public static function randomSign():Float
+	{
+		return Std.int(Math.random() * 2) * 2 - 1;
+	}
+	
 }

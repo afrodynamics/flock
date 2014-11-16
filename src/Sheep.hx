@@ -16,8 +16,9 @@ class Sheep extends FlockEntity
 	private static var speed:Float = 1;
 	private static var radius = 20;
 	var count:Int = 0;
-	private var found:Bool = false;
+	public var found:Bool = false;
 	private var findDistance:Float = 64;
+	public var killed:Bool = false;
 	
 	private var sprite:Spritemap;
 

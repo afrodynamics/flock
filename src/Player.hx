@@ -66,6 +66,8 @@ class Player extends FlockEntity
 			sprite.play("down");
 			sprite.flipped = false;
 		}
+		
+		if (y < 0) y = 0;
 
 		// Shoot
 		
