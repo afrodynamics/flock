@@ -11,7 +11,7 @@ class Player extends FlockEntity
 	var moveSpeed:Float = 2;
 	var canShoot:Bool = true;
 	var shootTimer:Int = 0;
-	var shootCooldown:Int = 5;
+	var shootCooldown:Int = 50;
 	private var sprite:Spritemap;
 
 	public override function new(x:Float = 0, y:Float = 0) {
@@ -30,6 +30,7 @@ class Player extends FlockEntity
 		Input.define("right", [Key.D, Key.RIGHT]);
 		Input.define("up", [Key.W, Key.UP]);
 		Input.define("down", [Key.S, Key.DOWN]);
+		layer = -10;
 
 	}
 
@@ -78,12 +79,12 @@ class Player extends FlockEntity
 				canShoot = true;
 			}
 		}
-		else if ( Input.mouseDown ) {
+		else if ( Input.mouseDown && MainScene.dayState == "night") {
 			canShoot = false;
 			shootTimer = shootCooldown;
 
 			// Add bullet to the scene
-			HXP.scene.add( new TorchProjectile(x + width/2, y + height/2) );
+			HXP.scene.add( new TorchProjectile(x + 12, y + 24));
 
 		}
 		

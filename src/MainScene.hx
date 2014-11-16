@@ -12,10 +12,10 @@ import flash.geom.Rectangle;
 class MainScene extends Scene
 {
 	
-	private static var dayLength:Int = 600;
-	private static var nightLength:Int = 600;
-	private var numMonsters:Int = 10; // number monsters to spawn during the night
-	private var dawnThresh:Int = 120;
+	private static var dayLength:Int = 720;
+	private static var nightLength:Int = 720;
+	private var numMonsters:Int = 7; // number monsters to spawn during the night
+	private var dawnThresh:Int = 180;
 	private var tickcount:Int = dayLength;
 	private var backdrop:Entity;
 	private var loadNext:Bool = true;

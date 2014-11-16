@@ -14,10 +14,10 @@ class Sheep extends FlockEntity
 	private var target:Point = new Point(0, 0);
 	private var velocity:Point = new Point(0, 0);
 	private static var speed:Float = 1;
-	private static var radius = 20;
+	private static var radius = 23;
 	var count:Int = 0;
 	public var found:Bool = false;
-	private var findDistance:Float = 64;
+	private var findDistance:Float = 48;
 	public var killed:Bool = false;
 	
 	private var sprite:Spritemap;
@@ -29,6 +29,7 @@ class Sheep extends FlockEntity
 		type = "sheep";
 		setHitbox(20, 14, -2, -8);
 		this.found = active;
+		layer = -10;
 	}
 	
 	override public function update():Void
@@ -64,7 +65,7 @@ class Sheep extends FlockEntity
 		for (e in HXP.scene.entitiesForType("sheep"))
 		{
 			var radius:Float = radius;
-			if (e == MainScene.player) radius = 40;
+			if (e == MainScene.player) radius = 35;
 			var dist:Float = FlockUtil.pointDistance(e.centerX, e.centerY, centerX, centerY);
 			if (dist < radius)
 			{

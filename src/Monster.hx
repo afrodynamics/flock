@@ -11,7 +11,7 @@ class Monster extends Entity
 {
 	private var target:Sheep;
 	private var velocity:Point = new Point();
-	private var speed:Float = 1.5;
+	private var speed:Float = 0.8;
 
 	public function new() 
 	{
